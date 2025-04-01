@@ -165,11 +165,11 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
       children: Content,
 
       // accessibility
-      accessible: _providedAccessible = DEFAULT_ACCESSIBLE,
+      accessible: _providedAccessible = Platform.OS !== 'ios',
       accessibilityLabel:
-        _providedAccessibilityLabel = DEFAULT_ACCESSIBILITY_LABEL,
+      _providedAccessibilityLabel = DEFAULT_ACCESSIBILITY_LABEL,
       accessibilityRole:
-        _providedAccessibilityRole = DEFAULT_ACCESSIBILITY_ROLE,
+      _providedAccessibilityRole = DEFAULT_ACCESSIBILITY_ROLE,
     } = props;
     //#endregion
 
@@ -349,7 +349,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
       const extendedPositionWithKeyboard = Math.max(
         0,
         animatedContainerHeight.value -
-          (animatedSheetHeight.value + keyboardHeightInContainer)
+        (animatedSheetHeight.value + keyboardHeightInContainer)
       );
 
       // detect if keyboard is open and the sheet is in temporary position
@@ -499,11 +499,11 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
 
       const currentIndex = isLayoutCalculated.value
         ? interpolate(
-            animatedPosition.value,
-            adjustedSnapPoints,
-            adjustedSnapPointsIndexes,
-            Extrapolate.CLAMP
-          )
+          animatedPosition.value,
+          adjustedSnapPoints,
+          adjustedSnapPointsIndexes,
+          Extrapolate.CLAMP
+        )
         : -1;
 
       /**
@@ -773,8 +773,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
         const snapPoints = animatedSnapPoints.value;
         invariant(
           index >= -1 && index <= snapPoints.length - 1,
-          `'index' was provided but out of the provided snap points range! expected value to be between -1, ${
-            snapPoints.length - 1
+          `'index' was provided but out of the provided snap points range! expected value to be between -1, ${snapPoints.length - 1
           }`
         );
         print({
@@ -1423,9 +1422,9 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
          */
         animatedKeyboardHeightInContainer.value = $modal
           ? Math.abs(
-              _keyboardHeight -
-                Math.abs(bottomInset - animatedContainerOffset.value.bottom)
-            )
+            _keyboardHeight -
+            Math.abs(bottomInset - animatedContainerOffset.value.bottom)
+          )
           : Math.abs(_keyboardHeight - animatedContainerOffset.value.bottom);
 
         const hasActiveGesture =
@@ -1665,7 +1664,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
                 <Animated.View
                   pointerEvents="box-none"
                   style={contentMaskContainerStyle}
-                  accessible={_providedAccessible ?? undefined}
+                  accessible={Platform.OS !== 'ios'}
                   accessibilityRole={_providedAccessibilityRole ?? undefined}
                   accessibilityLabel={_providedAccessibilityLabel ?? undefined}
                 >
